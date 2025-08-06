@@ -27,7 +27,7 @@ int main(int argc, char * argv[])
     // - How do the arguments to the function change the function's outcome?
     // - What does the function return and what can I do with that information?
     if (!SDL_Init(SDL_INIT_VIDEO)) {
-        SDL_Log("Couldn't initialize SDL2: %s\n", SDL_GetError());
+        SDL_Log("Couldn't initialize SDL: %s\n", SDL_GetError());
         return EXIT_FAILURE;
     }
 
@@ -42,7 +42,7 @@ int main(int argc, char * argv[])
     // 2) How would you make the window appear centered on the screen?
 
     if (window == nullptr) {
-        SDL_Log("Couldn't create a window in SDL2: %s\n", SDL_GetError());
+        SDL_Log("Couldn't create a window in SDL: %s\n", SDL_GetError());
         SDL_Quit();
         return EXIT_FAILURE;
     }
