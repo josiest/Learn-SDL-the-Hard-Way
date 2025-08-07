@@ -12,17 +12,24 @@ find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
 target_link_libraries(HelloSDL PUBLIC SDL2::SDL2)
 
 # Pop Quiz
-# 1.a) Why do we have two different calls to find_package for components SDL2main and SDL2?
-# 1.b) Why is the "CONFIG" argument used when calling find_package with SDL2?
-# 1.c) Why does only one call include the "REQUIRED" argument before "COMPONENTS"?
-# 1.d) When compiling on Windows, what happens if we link SDL2main after SDL2? Why does this error happen?
-
-set_target_properties(HelloSDL PROPERTIES
-        CXX_STANDARD 20
-        CXX_STANDARD_REQUIRED True)
-
-# Pop Quiz
-# 2.a) What happens if we take away STANDARD_REQUIRED? What if we change the standard to 17?
-# 2.b) Why would we want to require C++20 in the first place?
-# 2.c) Are there any other ways to set the C++ standard than set_target_properties?
-# 2.d) Why would you prefer or not prefer to use set_target_properties over other methods?
+# reminder: read the documentation for the cmake functions!
+# https://cmake.org/cmake/help/latest/index.html
+#
+# 1.a) How does find_package actually find the packages you specify: how does it perform its search?
+#
+# 1.b) Does SDL define its own cmake package?
+#      (hint: you can find the answer to this in source code at https://github.com/libsdl-org/SDL)
+#
+# 1.c) Why is the "CONFIG" argument used when calling find_package with SDL3?
+#
+# 2) In the second call to find_package, there are two instances of the REQUIRED keyword.
+#    What parts of the call to find_package do the different instances of REQUIRED apply to?
+#
+# For the following questions, these resources may be useful if you get stuck
+# - https://wiki.libsdl.org/SDL2/README-cmake
+# - https://wiki.libsdl.org/SDL2/FAQWindows
+#
+# 3.a) Why do we sometimes link SDL2main? Why is not required?
+#      (hint: Try commenting out the line where we link SDL2main. What happens if you run on Windows vs on Linux?)
+#
+# 3.b) When compiling on Windows, what happens if we link SDL2main after SDL2? Why do we get an error?

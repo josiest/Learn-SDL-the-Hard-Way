@@ -1,0 +1,37 @@
+hello.cpp
+=========
+1.a) SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMEPAD)
+     While we usually want to use commas to combine arguments, SDL_Init takes a singular bitflag argument.
+     We need to use bitwise-or "|" to combine the system flags. We'll see bitflag arguments in SDL often.
+
+1.b) 0 is often used as a boolean value for false:
+     if you write !SDL_Init(...) you might incorrectly assume SDL wasn't initialized
+
+2) Use SDL_WINDOWPOS_CENTERED instead of SDL_WINDOWPOS_UNDEFINED
+
+3.a) SDL allocates resources when its subsystems are initialized.
+     These resources always need to be deallocated to prevent a memory leak.
+3.b) Memory leak!
+
+CMakeLists.txt
+==============
+
+Answer Key
+1.a) cmake's find_package function may use two different search procedures: Module or Config.
+     Module mode looks for Find<PackageName>.cmake while Config mode searches for <PackageName>Config.cmake.
+     Find<PackageName>.cmake are usually third party scripts written to find libraries that weren't built
+     with cmake in mind.
+
+1.b) Yes! The source code has a cmake folder at the root level where it defines its own cmake package.
+     In particular notice that there's an SDL2Config.cmake.in file.
+
+1.c) Because SDL defines its own cmake package, we can tell find_package to skip module mode by specifying
+     the CONFIG argument
+
+2) The first REQUIRED keyword specified that we need the SDL2 package in order to compile this program.
+   However, the SDL2 package is composed of modular components that we can choose to include or exclude.
+   We must include the core component, which is also called SDL2, so we pass in REQUIRED COMPONENTS SDL2.
+
+3) The exact error message you get will depend on your system, but you will likely get some sort of linker error.
+   We get the error because SDL2main depends on functions from the SDL2 library, so we need to link SDL2main
+   before SDL2.
