@@ -1,0 +1,27 @@
+hello.cpp
+=========
+
+1) SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMEPAD)
+2) Use SDL_SetWindowPosition with SDL_WINDOWPOS_CENTERED
+
+3.a) SDL allocates resources when its subsystems are initialized.
+     These resources always need to be deallocated to prevent a memory leak.
+
+3.b) Memory leak! Both of these calls are deallocating resources that are not automatically deallocated.
+
+CMakeLists.txt
+==============
+
+1.a) cmake's find_package function may use two different search procedures: Module or Config. Module mode looks for
+     Find<PackageName>.cmake while Config mode searches for <PackageName>Config.cmake. Find<PackageName>.cmake are
+     usually third party scripts written to find libraries that weren't built with cmake in mind.
+
+1.b) Yes! The source code has a cmake folder at the root level where it defines its own cmake package. In particular
+     notice that there's an SDL3Config.cmake.in file. CMake will use this as a template to
+
+1.c) Because SDL defines its own cmake package, we can tell find_package to skip module mode by specifying the CONFIG
+     argument
+
+2) The first REQUIRED keyword specified that we need the SDL3 package in order to compile this program. However, the
+   SDL3 package is composed of modular components that we can choose to include or exclude. We must include the core
+   component which is also called SDL3, so we pass in REQUIRED COMPONENTS SDL3.

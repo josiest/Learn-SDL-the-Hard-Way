@@ -1,15 +1,19 @@
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
+
 #include <cstdint>
 #include <string>
+
+// Any time you see a function call that starts with "SDL_", look up the function on https://wiki.libsdl.org and ask
+// yourself these questions:
+// - What does the function do?
+// - How do the arguments to the function change the function's outcome?
+// - What does the function return and what can I do with that information?
 
 // We'll just do a few simple things in this example:
 // - boot up SDL
 // - create a window with a custom name
 // - wait for a couple seconds then quit the program
-
-// We'll need to initialize the SDL library to use it, but it's possible something may go wrong.
-// This definition will clarify the logic of what to do when something does go wrong.
-#define SDL_INIT_SUCCESS 0
 
 int main(int argc, char * argv[])
 {
@@ -18,22 +22,17 @@ int main(int argc, char * argv[])
     const std::string window_name = "Hello SDL";
     const int window_width = 640;
     const int window_height = 480;
-    const std::uint32_t window_flags = 0u;
     const std::uint32_t program_quit_delay_ms = 2000; // 2000 ms = 2 sec
 
-    // For the rest of this file, any time you see a function call that starts with "SDL_",
-    // look up the function on https://wiki.libsdl.org and ask yourself these questions:
-    // - What does the function do?
-    // - How do the arguments to the function change the function's outcome?
-    // - What does the function return and what can I do with that information?
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         SDL_Log("Couldn't initialize SDL: %s\n", SDL_GetError());
         return EXIT_FAILURE;
     }
 
     // Pop Quiz (SDL):
-    // 1) If I wanted to use audio and a controller in addition to video, how would I initialize those?
+    // 1) If you wanted to use audio and a controller in addition to video, how would you initialize those systems?
 
+    const std::uint32_t window_flags = 0u;
     SDL_Window * window = SDL_CreateWindow(window_name.c_str(),
                                            window_width, window_height,
                                            window_flags);
@@ -57,11 +56,3 @@ int main(int argc, char * argv[])
 
     return EXIT_SUCCESS;
 }
-
-// Answer Key:
-// 1) SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMEPAD)
-// 2) Use SDL_SetWindowPosition with SDL_WINDOWPOS_CENTERED
-//
-// 3.a) SDL allocates resources when its subsystems are initialized.
-//      These resources always need to be deallocated to prevent a memory leak.
-// 3.b) Memory leak! Both of these calls are deallocating resources that are not automatically deallocated.
