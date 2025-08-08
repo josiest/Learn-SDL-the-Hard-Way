@@ -44,8 +44,8 @@ and it's pretty stable and well-supported since git is so popular.
 ### Building and installing SDL
 
 Once you have the terminal set up, the next step is to clone the SDL git project. The commands to do this are exactly 
-the same as they are on the official installation wiki page linked above. However, the commands for building and
-installing are going to be a little different on Windows.
+the same as they are in the cmake section on the official installation wiki page linked above. However, the commands
+for building and installing are going to be a little different on Windows.
 
 In particular, when you're configuring the build for cmake, you'll likely want to give it a specific generator to
 specify what toolsets you'll be using to build the library. I'd highly recommend using Ninja here. The command looks

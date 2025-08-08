@@ -30,7 +30,6 @@ int main(int argc, char * argv[])
     const std::string window_name = "Hello SDL";
     const int window_width = 640;
     const int window_height = 480;
-    const std::uint32_t window_flags = 0u;
     const std::uint32_t program_quit_delay_ms = 2000; // 2000 ms = 2 sec
 
     if (SDL_Init(SDL_INIT_VIDEO) != SDL_INIT_SUCCESS) {
@@ -44,13 +43,14 @@ int main(int argc, char * argv[])
     // 1.b) If we hadn't defined the macro SDL_INIT_SUCCESS earlier, the conditional expression would have been
     //      SDL_Init(SDL_INIT_VIDEO) != 0. Is it clear what role 0 plays? How might that expression be misread?
 
+    const std::uint32_t window_flags = 0u;
     SDL_Window * window = SDL_CreateWindow(window_name.c_str(),
                                            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                                            window_width, window_height,
                                            window_flags);
 
     // Pop Quiz (SDL):
-    // 2) How would you make the window appear centered on the screen?
+    // 2) How would you make the window appear centered on the screen? What about fullscreen?
 
     if (window == nullptr) {
         SDL_Log("Couldn't create a window in SDL: %s\n", SDL_GetError());
